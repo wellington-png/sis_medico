@@ -1,0 +1,147 @@
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+
+    <li class="nav-item">
+      <a class="nav-link" href="{% url 'home' %}">
+        <i class="bi bi-grid"></i>
+        <span>Dashboard</span>
+      </a>
+    </li><!-- End Dashboard Nav -->
+
+    <!-- Usuarios Section -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#usuarios-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Usuarios</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="usuarios-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'admin-list' %}">
+            <i class="bi bi-circle"></i><span>Admins</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'doctor-list' %}">
+            <i class="bi bi-circle"></i><span>Médicos</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'receptionist-list' %}">
+            <i class="bi bi-circle"></i><span>Recepcionistas</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'patient-list' %}">
+            <i class="bi bi-circle"></i><span>Pacientes</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'user-create' %}">
+            <i class="bi bi-circle"></i><span>Cadastro</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Usuarios Nav -->
+
+    <!-- Médico Section -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#medico-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-menu-button-wide"></i><span>Médico</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="medico-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{% url 'doctor-list' %}">
+            <i class="bi bi-circle"></i><span>Listagem</span>
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'user-create' %}">
+            <i class="bi bi-circle"></i><span>Cadastro</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Médico Nav -->
+
+    <!-- Consultas Section -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#consultas-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-calendar"></i><span>Consultas</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="consultas-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="appointments-list.html">
+            <i class="bi bi-circle"></i><span>Listagem</span>
+          </a>
+        </li>
+        <li>
+          <a href="appointments-calendar.html">
+            <i class="bi bi-circle"></i><span>Calendário</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Consultas Nav -->
+
+    <!-- Prontuário Eletrônico Section -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#medical-records-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-file-medical"></i><span>Prontuário Eletrônico</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="medical-records-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="medical-records-view.html">
+            <i class="bi bi-circle"></i><span>Visualizar</span>
+          </a>
+        </li>
+        <li>
+          <a href="medical-records-upload.html">
+            <i class="bi bi-circle"></i><span>Upload de Documentos</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Prontuário Eletrônico Nav -->
+
+    <!-- Recursos e Estoque Section -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#resources-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-boxes"></i><span>Recursos e Estoque</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="resources-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="inventory-list.html">
+            <i class="bi bi-circle"></i><span>Controle de Estoque</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Recursos e Estoque Nav -->
+
+    <!-- Relatórios e Estatísticas Section -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#reports-nav" data-bs-toggle="collapse" href="#">
+        <i class="bi bi-bar-chart"></i><span>Relatórios e Estatísticas</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="reports-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="reports-overview.html">
+            <i class="bi bi-circle"></i><span>Visão Geral</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Relatórios e Estatísticas Nav -->
+
+    <li class="nav-heading">Pages</li>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="users-profile.html">
+        <i class="bi bi-person"></i>
+        <span>Profile</span>
+      </a>
+    </li><!-- End Profile Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="pages-faq.html">
+        <i class="bi bi-question-circle"></i>
+        <span>F.A.Q</span>
+      </a>
+    </li><!-- End F.A.Q Page Nav -->
+
+  </ul>
+</aside>
