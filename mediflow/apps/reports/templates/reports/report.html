@@ -1,0 +1,109 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Relatórios e Estatísticas</h2>
+    
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total de Consultas</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_appointments }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Total de Pacientes Atendidos</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_patients }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Faturamento Total</div>
+                <div class="card-body">
+                    <h5 class="card-title">R$ {{ total_billing|floatformat:2 }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <h3>Consultas por Paciente</h3>
+    <canvas id="appointmentsPerPatientChart"></canvas>
+    
+    <h3>Consultas por Médico</h3>
+    <canvas id="appointmentsPerDoctorChart"></canvas>
+    
+    <h3>Faturamento por Status de Pagamento</h3>
+    <canvas id="billingStatusChart"></canvas>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Gráfico de Consultas por Paciente
+    var ctxPatient = document.getElementById('appointmentsPerPatientChart').getContext('2d');
+    var appointmentsPerPatientChart = new Chart(ctxPatient, {
+        type: 'bar',
+        data: {
+            labels: [{% for entry in appointments_per_patient %}'Paciente {{ entry.patient }}',{% endfor %}],
+            datasets: [{
+                label: 'Número de Consultas',
+                data: [{% for entry in appointments_per_patient %}{{ entry.count }}, {% endfor %}],
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+    // Gráfico de Consultas por Médico
+    var ctxDoctor = document.getElementById('appointmentsPerDoctorChart').getContext('2d');
+    var appointmentsPerDoctorChart = new Chart(ctxDoctor, {
+        type: 'bar',
+        data: {
+            labels: [{% for entry in appointments_per_doctor %}'Médico {{ entry.doctor }}',{% endfor %}],
+            datasets: [{
+                label: 'Número de Consultas',
+                data: [{% for entry in appointments_per_doctor %}{{ entry.count }}, {% endfor %}],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    
+    // Gráfico de Faturamento por Status de Pagamento
+    var ctxBilling = document.getElementById('billingStatusChart').getContext('2d');
+    var billingStatusChart = new Chart(ctxBilling, {
+        type: 'pie',
+        data: {
+            labels: [{% for entry in billing_status_summary %}'{{ entry.payment_status }}',{% endfor %}],
+            datasets: [{
+                label: 'Faturamento por Status',
+                data: [{% for entry in billing_status_summary %}{{ entry.total_amount }}, {% endfor %}],
+                backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(255, 206, 86, 0.2)'],
+                borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)'],
+                borderWidth: 1
+            }]
+        }
+    });
+});
+</script>
+{% endblock %}

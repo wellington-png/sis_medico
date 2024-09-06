@@ -1,0 +1,54 @@
+{% extends "global/base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Lista de Pacientes</h1>
+
+    <!-- Botão de Criar Paciente -->
+    <div class="mb-3">
+        <a href="{% url 'patient-create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Criar Paciente
+        </a>
+    </div>
+
+    <!-- Tabela de Pacientes -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>CPF</th>
+                <th>Data de Nascimento</th>
+                <th>Gênero</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th>Endereço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ patient.name }}</td>
+                <td>{{ patient.cpf }}</td>
+                <td>{{ patient.birth_date|date:"d/m/Y" }}</td>
+                <td>{{ patient.get_gender_display }}</td>
+                <td>{{ patient.phone }}</td>
+                <td>{{ patient.email }}</td>
+                <td>{{ patient.address }}</td>
+                <td>
+                    <!-- Ações como visualizar, editar ou excluir -->
+                    <a href="{% url 'patient-edit' patient.id %}" class="btn btn-warning btn-sm">Editar</a>
+                    <!-- Adicione um botão de excluir se necessário -->
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9">Nenhum paciente encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

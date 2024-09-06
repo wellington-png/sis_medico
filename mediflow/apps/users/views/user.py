@@ -49,15 +49,6 @@ class AdminListView(LoginRequiredMixin, ListView):
         return UserModel.objects.filter(role="admin")
 
 
-class DoctorListView(LoginRequiredMixin, ListView):
-    model = UserModel
-    template_name = "users/doctor_list.html"
-    context_object_name = "users"
-    login_url = "/login/"
-
-    def get_queryset(self):
-        return UserModel.objects.filter(role="doctor")
-
 
 class ReceptionistListView(LoginRequiredMixin, ListView):
     model = UserModel
@@ -68,12 +59,3 @@ class ReceptionistListView(LoginRequiredMixin, ListView):
     def get_queryset(self):
         return UserModel.objects.filter(role="receptionist")
 
-
-class PatientListView(LoginRequiredMixin, ListView):
-    model = UserModel
-    template_name = "users/patient_list.html"
-    context_object_name = "users"
-    login_url = "/login/"
-
-    def get_queryset(self):
-        return UserModel.objects.filter(role="patient")

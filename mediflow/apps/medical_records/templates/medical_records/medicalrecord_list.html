@@ -1,0 +1,40 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Medical Records</h2>
+    <a href="{% url 'medicalrecord-create' %}" class="btn btn-primary mb-3">Add New Record</a>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Diagnosis</th>
+                <th>Prescription</th>
+                <th>Documents</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in medical_records %}
+            <tr>
+                <td>{{ record.patient }}</td>
+                <td>{{ record.doctor }}</td>
+                <td>{{ record.diagnosis }}</td>
+                <td>{{ record.prescription }}</td>
+                <td>
+                    {% if record.documents %}
+                        <a href="{{ record.documents.url }}" target="_blank">View Document</a>
+                    {% else %}
+                        No Document
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'medicalrecord-update' record.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

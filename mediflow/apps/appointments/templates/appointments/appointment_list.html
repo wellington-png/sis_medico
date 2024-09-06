@@ -1,0 +1,70 @@
+{% extends 'global/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Appointments</h2>
+
+    <!-- Button to create a new appointment -->
+    <div class="mb-3">
+        <a href="{% url 'appointment-create' %}" class="btn btn-primary">Create New Appointment</a>
+    </div>
+
+    <!-- Table to display appointments -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Description</th>
+                <th>Appointment Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if appointments %}
+            {% for appointment in appointments %}
+            <tr>
+                <td>{{ appointment.patient }}</td>
+                <td>{{ appointment.doctor }}</td>
+                <td>{{ appointment.description }}</td>
+                <td>{{ appointment.appointment_date }}</td>
+                <td>
+                    <!-- Links for update and delete actions -->
+                    <a href="{% url 'appointment-update' appointment.id %}" class="btn btn-sm btn-warning">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="5" class="text-center">No appointments found.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    <!-- Pagination controls -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if is_paginated %}
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+{% endblock %}

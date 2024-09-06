@@ -1,6 +1,187 @@
 {% extends "global/base.html" %}
 
 {% block content %}
-<h1>Users</h1>
-<p>Users list</p>
+<div class="container mt-4">
+    <h1>Dashboard</h1>
+
+    <!-- Resumo de Dados -->
+    <div class="row mb-4">
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card bg-primary text-white mb-3">
+                    <div class="card-header">Total de Pacientes</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ total_patients }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-success text-white mb-3">
+                    <div class="card-header">Total de Consultas</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ total_appointments }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-info text-white mb-3">
+                    <div class="card-header">Total de Itens em Estoque</div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ total_inventory_items }}</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-danger text-white mb-3">
+                    <div class="card-header">Faturamento Total</div>
+                    <div class="card-body">
+                        <h5 class="card-title">R$ {{ total_billing|floatformat:2 }}</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gráficos e Listagens Recentes -->
+    <div class="row">
+        <!-- Gráficos -->
+        <div class="col-md-6 mb-4">
+            <h3>Consultas por Data</h3>
+            <canvas id="appointmentsChart"></canvas>
+        </div>
+        <div class="col-md-6 mb-4">
+            <h3>Faturamento por Data</h3>
+            <canvas id="billingChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Cards de Consultas e Faturas Recentes -->
+    <div class="row">
+        <!-- Consultas Recentes -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Consultas Recentes
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for appointment in recent_appointments %}
+                            <li class="list-group-item">
+                                {{ appointment.patient }} - {{ appointment.appointment_date|date:"d/m/Y" }}
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item">Nenhuma consulta recente.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Faturas Recentes -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    Faturas Recentes
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for bill in recent_bills %}
+                            <li class="list-group-item">
+                                {{ bill.patient }} - R$ {{ bill.amount }} - {{ bill.created_at|date:"d/m/Y" }}
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item">Nenhuma fatura recente.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts para Gráficos -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dados para o gráfico de consultas
+            const appointmentData = {{ appointment_counts|safe }};
+            const appointmentDates = appointmentData.map(item => item.appointment_date);
+            const appointmentCounts = appointmentData.map(item => item.count);
+
+            // Gráfico de Consultas
+            const ctxAppointments = document.getElementById('appointmentsChart').getContext('2d');
+            new Chart(ctxAppointments, {
+                type: 'line',
+                data: {
+                    labels: appointmentDates,
+                    datasets: [{
+                        label: 'Número de Consultas',
+                        data: appointmentCounts,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'day'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Data'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Número de Consultas'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Dados para o gráfico de faturamento
+            const billingData = {{ billing_amounts|safe }};
+            const billingDates = billingData.map(item => item.payment_date);
+            const billingAmounts = billingData.map(item => item.total_amount);
+
+            // Gráfico de Faturamento
+            const ctxBilling = document.getElementById('billingChart').getContext('2d');
+            new Chart(ctxBilling, {
+                type: 'bar',
+                data: {
+                    labels: billingDates,
+                    datasets: [{
+                        label: 'Faturamento',
+                        data: billingAmounts,
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'month'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Data'
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Faturamento'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
 {% endblock %}

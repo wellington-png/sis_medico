@@ -16,6 +16,13 @@ class UserForm(forms.ModelForm):
             'role': forms.Select(attrs={'class': 'form-control'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['role'].choices = [
+            ('admin', 'Admin'),
+            ('funcionario', 'Funcionário'),
+        ]
+
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
         password2 = self.cleaned_data.get("password2")
