@@ -107,5 +107,5 @@ Siga os passos abaixo para instalar e configurar o **SisMedico** em seu ambiente
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/medflow.git
-   cd medflow
+   git clone https://github.com/wellington-png/sis_medico
+   cd sis_medico
