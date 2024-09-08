@@ -1,140 +1,111 @@
+# SisMedico - Sistema de Gerenciamento de Clínicas Médicas
 
----
-
-# MediFlow - Sistema de Gerenciamento de Consultório Médico
-
-MediFlow é um sistema de gerenciamento de consultório médico desenvolvido em Django, projetado para facilitar a gestão de pacientes, agendamento de consultas, prontuários médicos, faturamento e administração de recursos. Este projeto visa oferecer uma solução completa e escalável para consultórios médicos de diversos tamanhos.
+O **SisMedico** é uma solução completa desenvolvida em Django para auxiliar clínicas médicas no gerenciamento de consultas, pacientes, médicos, prontuários eletrônicos e administração em geral. Ele oferece uma interface intuitiva e escalável, garantindo um fluxo de trabalho eficiente para clínicas de diferentes tamanhos.
 
 ## **Índice**
 
-- [Descrição do Projeto](#descrição-do-projeto)
-- [Funcionalidades Principais](#funcionalidades-principais)
-- [Estrutura de Apps](#estrutura-de-apps)
-- [Requisitos Funcionais](#requisitos-funcionais)
+- [Visão Geral](#visão-geral)
+- [Principais Funcionalidades](#principais-funcionalidades)
+- [Estrutura do Projeto](#estrutura-do-projeto)
+- [Requisitos do Sistema](#requisitos-do-sistema)
 - [Requisitos Não Funcionais](#requisitos-não-funcionais)
-- [Instalação e Configuração](#instalação-e-configuração)
+- [Guia de Instalação](#guia-de-instalação)
 
-## **Descrição do Projeto**
+## **Visão Geral**
 
-O MediFlow é um sistema de gerenciamento que permite a gestão de pacientes, consultas, prontuários médicos, faturamento e recursos do consultório. A aplicação foi desenvolvida utilizando Django, seguindo as melhores práticas de desenvolvimento para garantir segurança, escalabilidade e manutenibilidade.
+O **SisMedico** foi projetado para ser uma solução completa de gerenciamento para clínicas médicas. O sistema permite o controle de pacientes, médicos, consultas e prontuários eletrônicos, além de recursos como faturamento e controle de estoque. A aplicação segue as melhores práticas de desenvolvimento, com foco em segurança e escalabilidade, sendo ideal para clínicas que precisam centralizar suas operações em um único sistema.
 
-## **Funcionalidades Principais**
+## **Principais Funcionalidades**
 
-- **Cadastro de Pacientes:** Gestão completa dos dados dos pacientes, incluindo histórico médico.
-- **Agendamento de Consultas:** Sistema de agendamento com visualização de calendário.
-- **Prontuário Eletrônico:** Registro e consulta de histórico médico, com upload de documentos.
-- **Faturamento e Pagamentos:** Geração de faturas e integração com gateways de pagamento.
-- **Gestão de Recursos e Estoque:** Controle de estoque com alertas automáticos.
+- **Gerenciamento de Pacientes:** Cadastro completo de pacientes com histórico médico detalhado.
+- **Agendamento de Consultas:** Sistema de agendamento de consultas com visualização de calendário para otimização do tempo de médicos e pacientes.
+- **Prontuário Eletrônico:** Registro e acompanhamento dos prontuários médicos, incluindo a possibilidade de anexar documentos.
+- **Faturamento:** Geração e controle de faturas para consultas e tratamentos, com suporte a pagamentos.
+- **Gestão de Estoque:** Controle de medicamentos e insumos com alertas automáticos para reposição.
+- **Controle de Usuários:** Autenticação e gerenciamento de diferentes tipos de usuários, como médicos, recepcionistas e administradores.
 
-## **Estrutura de Apps**
+## **Estrutura do Projeto**
 
-### **1. `patients` (Pacientes):**
+O projeto está dividido em vários módulos para melhor organização e manutenção. Abaixo estão os principais módulos do **SisMedico**:
 
-Este app é responsável pelo gerenciamento de pacientes, incluindo o cadastro, edição, exclusão e consulta dos dados pessoais e históricos médicos.
+### **1. `pacientes` (Gerenciamento de Pacientes)**
+
+Módulo responsável por gerenciar o cadastro, consulta, edição e exclusão de pacientes, bem como o acesso aos seus históricos médicos.
 
 - **Funcionalidades:**
-  - Cadastro de novos pacientes.
-  - Edição e exclusão de registros de pacientes.
-  - Consulta do histórico médico dos pacientes.
+  - Cadastro, edição e exclusão de pacientes.
+  - Visualização do histórico médico de cada paciente.
 
-### **2. `appointments` (Consultas):**
+### **2. `consultas` (Gerenciamento de Consultas)**
 
-Este app gerencia o agendamento de consultas, permitindo aos pacientes e profissionais de saúde visualizar horários disponíveis e realizar agendamentos.
+Gerencia o agendamento de consultas, oferecendo uma interface de calendário para médicos e recepcionistas visualizarem os horários disponíveis.
 
 - **Funcionalidades:**
   - Agendamento de consultas.
-  - Visualização de calendário com horários disponíveis e ocupados.
-  - Registro de notas sobre consultas.
+  - Visualização de calendário para facilitar o controle de horários.
+  - Registro de anotações durante as consultas.
 
-### **3. `medical_records` (Prontuários):**
+### **3. `prontuarios` (Prontuário Eletrônico)**
 
-Responsável pelo gerenciamento dos prontuários eletrônicos, onde médicos podem registrar diagnósticos, prescrições e fazer o upload de exames e documentos.
-
-- **Funcionalidades:**
-  - Registro de diagnósticos e prescrições.
-  - Upload de documentos (PDF, JPG, PNG, etc.).
-  - Acesso seguro ao histórico médico do paciente.
-
-### **4. `billing` (Faturamento e Pagamentos):**
-
-Este app gerencia o faturamento e os pagamentos, facilitando a geração de faturas e a integração com sistemas de pagamento online.
+Armazena as informações médicas do paciente, permitindo o registro de diagnósticos, prescrições e upload de exames e documentos.
 
 - **Funcionalidades:**
-  - Geração de faturas e controle de pagamentos.
-  - Integração com gateways de pagamento para transações online.
-  - Relatórios financeiros para análise de receitas e despesas.
+  - Registro de diagnósticos, tratamentos e prescrições.
+  - Upload de exames e documentos (PDF, JPG, PNG, etc.).
+  - Consulta ao histórico médico completo.
 
-### **5. `inventory` (Gestão de Recursos e Estoque):**
+### **4. `faturamento` (Gerenciamento Financeiro)**
 
-Este app controla o estoque de medicamentos e outros materiais, gerando alertas automáticos para reposição de itens quando atingem um limite mínimo.
-
-- **Funcionalidades:**
-  - Controle de estoque de medicamentos e materiais.
-  - Alertas automáticos para reposição de itens.
-  - Gestão de entradas e saídas de estoque.
-
-### **6. `users` (Usuários):**
-
-Gerencia a autenticação e autorização dos usuários do sistema, como administradores, médicos, recepcionistas e pacientes, definindo diferentes níveis de acesso.
+Módulo que gerencia a geração de faturas e o controle de pagamentos de consultas e tratamentos realizados na clínica.
 
 - **Funcionalidades:**
-  - Cadastro e gerenciamento de usuários com diferentes papéis.
+  - Geração de faturas.
+  - Controle de recebimentos e pagamentos.
+  - Relatórios financeiros detalhados para acompanhamento.
+
+### **5. `estoque` (Controle de Estoque)**
+
+Gerencia o estoque de medicamentos e materiais da clínica, com alertas automáticos para reposição de itens em baixa.
+
+- **Funcionalidades:**
+  - Controle de entradas e saídas de estoque.
+  - Alertas de necessidade de reposição.
+  - Relatórios de uso de materiais.
+
+### **6. `usuarios` (Controle de Usuários)**
+
+Gerencia a autenticação e as permissões de diferentes tipos de usuários no sistema, como administradores, médicos, recepcionistas e pacientes.
+
+- **Funcionalidades:**
+  - Cadastro de usuários com papéis específicos (médicos, administradores, recepcionistas).
   - Autenticação e autorização.
-  - Gerenciamento de perfis de usuários.
+  - Gerenciamento de permissões de acesso.
 
-## **Requisitos Funcionais**
+## **Requisitos do Sistema**
 
-- **Cadastro de Pacientes:** Permitir cadastro, edição e exclusão de pacientes, com informações detalhadas.
-- **Agendamento de Consultas:** Agendamento de consultas com visualização de horários disponíveis.
-- **Prontuário Eletrônico:** Registro e consulta de históricos médicos, com upload de documentos.
-- **Faturamento e Pagamentos:** Registro de pagamentos, geração de faturas e integração com gateways de pagamento.
-- **Gestão de Recursos e Estoque:** Controle de estoque de medicamentos e materiais, com alertas automáticos.
+- **Cadastro de Pacientes:** Gerenciar informações pessoais e histórico médico dos pacientes.
+- **Agendamento de Consultas:** Permitir agendamento e visualização de horários.
+- **Prontuário Eletrônico:** Registro detalhado de diagnósticos e documentos médicos.
+- **Faturamento:** Controle financeiro das consultas e serviços realizados na clínica.
+- **Gestão de Estoque:** Controle de medicamentos e materiais com alertas automáticos.
+- **Controle de Usuários:** Diferentes níveis de acesso e permissões.
 
 ## **Requisitos Não Funcionais**
 
-- **Segurança:** Implementação de autenticação e autorização com diferentes níveis de acesso e criptografia de dados sensíveis.
-- **Desempenho:** Respostas do sistema com tempo de carregamento inferior a 2 segundos para 95% das interações.
-- **Escalabilidade:** Sistema projetado para escalar horizontalmente e verticalmente conforme necessário.
-- **Manutenibilidade:** Código modular e documentado, com plano de manutenção para atualizações e correções de bugs.
-- **Usabilidade:** Interface intuitiva e responsiva, compatível com dispositivos móveis.
+- **Segurança:** Criptografia de dados sensíveis e autenticação segura.
+- **Desempenho:** Respostas rápidas e otimização de carregamento para uma boa experiência de uso.
+- **Escalabilidade:** Suporte a crescimento da clínica, com possibilidade de adicionar novos módulos e funcionalidades.
+- **Usabilidade:** Interface simples e intuitiva, compatível com dispositivos móveis e desktops.
+- **Manutenção:** Estrutura modular para facilitar futuras melhorias e atualizações.
 
-## **Instalação e Configuração**
+## **Guia de Instalação**
+
+Siga os passos abaixo para instalar e configurar o **SisMedico** em seu ambiente local:
+
+## **Guia de Instalação**
 
 1. Clone o repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/mediflow.git
-   cd mediflow
-   ```
-
-2. Crie e ative um ambiente virtual:
-
-   ```bash
-   python3 -m venv env
-   source env/bin/activate
-   ```
-
-3. Instale as dependências:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. Realize as migrações do banco de dados:
-
-   ```bash
-   python manage.py migrate
-   ```
-
-5. Crie um superusuário:
-
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-6. Inicie o servidor:
-   ```bash
-   python manage.py runserver
-   ```
-
----
+   git clone https://github.com/seu-usuario/medflow.git
+   cd medflow
