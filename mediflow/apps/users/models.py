@@ -6,16 +6,13 @@ from django.utils.translation import gettext_lazy as _
 class UserModel(AbstractUser):
 
     ROLE_CHOICES = [
-        ('admin', 'Admin'),
-        ('doctor', 'Doctor'),
-        ('receptionist', 'Receptionist'),
-        ('patient', 'Patient'),
+        ("admin", "Admin"),
+        ("doctor", "Doctor"),
+        ("receptionist", "Receptionist"),
+        ("patient", "Patient"),
     ]
     role = models.CharField(
-        _('Role'),
-        max_length=20,
-        choices=ROLE_CHOICES,
-        default='patient'
+        _("Role"), max_length=20, choices=ROLE_CHOICES, default="patient"
     )
 
 
@@ -25,5 +22,8 @@ class DoctorModel(models.Model):
         UserModel,
         on_delete=models.PROTECT,
     )
-    crm = models.CharField(_('CRM'), max_length=20)
-    especiality = models.CharField(_('Especiality'), max_length=255)
+    crm = models.CharField(_("CRM"), max_length=20)
+    especiality = models.CharField(_("Especiality"), max_length=255)
+
+    def __str__(self):
+        return self.user.get_full_name()

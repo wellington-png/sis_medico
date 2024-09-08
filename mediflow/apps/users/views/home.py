@@ -5,6 +5,7 @@ from mediflow.apps.patients.models import PatientModel
 from mediflow.apps.appointments.models import AppointmentModel
 from mediflow.apps.inventory.models import InventoryModel
 from mediflow.apps.billing.models import BillingModel
+from mediflow.apps.medical_records.models import MedicalRecordModel
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = "users/home.html"
@@ -26,5 +27,12 @@ class HomeView(LoginRequiredMixin, TemplateView):
         # Dados para gráficos
         context['appointment_counts'] = AppointmentModel.objects.values('appointment_date').annotate(count=Count('id'))
         context['billing_amounts'] = BillingModel.objects.values('payment_date').annotate(total_amount=Sum('amount'))
+
+        if self.request.user.role == 'patient':
+            try:
+                patient = PatientModel.objects.get(user=self.request.user)
+                context['medical_records'] = MedicalRecordModel.objects.filter(patient=patient)
+            except PatientModel.DoesNotExist:
+                context['medical_records'] = []
 
         return context

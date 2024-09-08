@@ -54,7 +54,12 @@
   <!-- End Header -->
   {% include 'global/partials/_header.html' %}
   <!-- ======= Sidebar ======= -->
+
+  <!-- se o user for parciente não mostrar -->
+
+  {% if user.is_authenticated and user.role != 'patient' %}
   {% include 'global/partials/_sidebar.html' %}
+  {% endif %}
   <!-- End Sidebar-->
 
   <main id="main" class="main">
